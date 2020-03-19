@@ -3102,21 +3102,78 @@ samples.forEach((element)=>{
 
   item.addEventListener("click", function(){
     let modal = tagCreator('div', 'modal');
+    container.appendChild(modal);
+
     let modalContent = tagCreator('div', 'modal-content');
+    modal.appendChild(modalContent);
+
     let modalContentHeader = tagCreator('div', 'modal-content-header');
-    
+    modalContent.appendChild(modalContentHeader);
+
     let close = tagCreator('span', 'close', 'x')
     close.addEventListener("click", function(){
       modal.style.display = 'none';
     });
-    
-    let sprites = tagCreator('img', 'sprites', element.id);
-    
     modalContentHeader.appendChild(close);
-    modalContent.appendChild(modalContentHeader);
-    modalContent.appendChild(sprites);
-    modal.appendChild(modalContent);
-    container.appendChild(modal);
+    
+    let modalContentInfo = tagCreator('div', 'modal-content-info');
+    modalContent.appendChild(modalContentInfo);
+
+    let modalSprite = tagCreator('img', 'pokemon-sprites', element.id);
+    modalContentInfo.appendChild(modalSprite);
+  
+    let pokemonInfo = tagCreator('div', 'pokemon-info');
+    modalContentInfo.appendChild(pokemonInfo);
+
+    let pokemonName = tagCreator('p', 'pokemon-name', element.name.english);
+    pokemonInfo.appendChild(pokemonName);
+
+    let pokemonType = tagCreator('div', 'pokemon-type');
+    pokemonInfo.appendChild(pokemonType);
+    
+    if(element.type.length == 1) {
+      let typeContainer = tagCreator('span', 'type ' + element.type +'-type', element.type);
+      typeContainer.style.borderRadius = '3px';
+      pokemonType.appendChild(typeContainer);
+    } else {
+      for(let i = 0; i < element.type.length; i++) {
+        let typeContainer = tagCreator('span', 'type ' + element.type[i] +'-type '+'type-'+(i+1), element.type[i]);
+        pokemonType.appendChild(typeContainer);
+      }
+    }
+
+    let pokemonAttributes = tagCreator('div', 'pokemon-attributes');
+    modalContent.appendChild(pokemonAttributes);
+    
+    let attrTitle = tagCreator('h4', 'attr-title', 'Base Attributes');
+    pokemonAttributes.appendChild(attrTitle);
+
+    let attrValue = tagCreator('div', 'attr-value');
+    pokemonAttributes.appendChild(attrValue);
+
+    let leftGroup = tagCreator('div', 'left-group');
+    attrValue.appendChild(leftGroup);
+
+    let rightGroup = tagCreator('div', 'right-group');
+    attrValue.appendChild(rightGroup);
+
+    let attributesArray = Object.keys(element.base);
+    let counter = 0;
+    attributesArray.forEach(key=>{
+      let attrGroup = tagCreator('div', 'attr-group');
+      let label = tagCreator('p', 'label', key);
+      let individualValue = tagCreator('p', key.replace(/\s+/g, '-').toLowerCase().split('.').join(""), element.base[key]);
+      
+      attrGroup.appendChild(label);
+      attrGroup.appendChild(individualValue);
+      
+
+      if(leftGroup.childNodes.length < 3) {
+        leftGroup.appendChild(attrGroup);
+      } else {
+        rightGroup.appendChild(attrGroup);
+      }
+    });
   });
 });
 
@@ -3124,7 +3181,7 @@ function tagCreator(tagName, tagClass, elementValue) {
   let newTag = document.createElement(tagName);
   newTag.className = tagClass;
 
-  if(tagName == 'img' && tagClass == 'image'){
+  if(tagName == 'img' && elementValue){
     if(elementValue < 10){
       newTag.src = './assets/images/00'+elementValue+'.png';
     } else if(elementValue >= 10 && elementValue <= 99) {
@@ -3132,7 +3189,7 @@ function tagCreator(tagName, tagClass, elementValue) {
     } else {
       newTag.src = './assets/images/'+elementValue+'.png';
     }
-  } else if(tagName == 'img' && tagClass == 'sprites'){
+  } /* else if(tagName == 'img' && tagClass == 'sprites'){
     if(elementValue < 10){
       newTag.src = './assets/sprites/00'+elementValue+'MS.png';
     } else if(elementValue >= 10 && elementValue <= 99) {
@@ -3140,9 +3197,11 @@ function tagCreator(tagName, tagClass, elementValue) {
     } else {
       newTag.src = './assets/sprites/'+elementValue+'MS.png';
     }
-  } else if(tagName == 'p' && elementValue) {
+  }*/ else if(tagName == 'p' && elementValue) {
     newTag.innerText = elementValue;
   } else if(tagName == 'span'){
+    newTag.innerText = elementValue;
+  } else if(tagName == 'h4' && elementValue) {
     newTag.innerText = elementValue;
   }
 
