@@ -81,6 +81,20 @@ nav.hidden {
   grid-template-columns: auto auto;
   column-gap: 1em;
   row-gap: 1em;
+  transition: ease-in-out 350ms;
+}
+
+@media screen and (min-width: 50em) {
+  .container {
+    grid-template-columns: auto auto auto;
+  }
+}
+
+
+@media screen and (min-width: 65em) {
+  .container {
+    grid-template-columns: auto auto auto auto;
+  }
 }
 
 .item {
@@ -101,7 +115,7 @@ nav.hidden {
 }
 
 .item img {
-  max-width: 70%;
+  width: 65%;
   height: auto;
 }
 
@@ -122,8 +136,21 @@ nav.hidden {
   padding: 1.25em;
   border: 1px solid #888;
   border-radius: 3px;
-  width: 80%;
-  height: 50%;
+  width: 18.75em;
+  height: 20em;
+  transition: ease-in-out 350ms;
+}
+
+@media screen and (min-width: 50em) {
+  .modal-content {
+    width: 31.25em;
+  }
+}
+
+@media screen and (min-width: 65em) {
+  .modal-content {
+    width: 40em;
+  }
 }
 
 .modal-content-header {
@@ -137,10 +164,6 @@ nav.hidden {
   font-size: 1.25em;
   color: #333;
 }
-
-/* .modal-content-header {
-  margin-bottom: 1em;
-} */
 
 .modal-content-info {
   display: flex;

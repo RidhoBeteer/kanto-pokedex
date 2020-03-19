@@ -3179,25 +3179,17 @@ samples.forEach((element)=>{
 
 function tagCreator(tagName, tagClass, elementValue) {
   let newTag = document.createElement(tagName);
-  newTag.className = tagClass;
+  newTag.className = tagClass.toLowerCase();
 
   if(tagName == 'img' && elementValue){
     if(elementValue < 10){
-      newTag.src = './assets/images/00'+elementValue+'.png';
+      newTag.src = './images/00'+elementValue+'.png';
     } else if(elementValue >= 10 && elementValue <= 99) {
-      newTag.src = './assets/images/0'+elementValue+'.png';
+      newTag.src = './images/0'+elementValue+'.png';
     } else {
-      newTag.src = './assets/images/'+elementValue+'.png';
+      newTag.src = './images/'+elementValue+'.png';
     }
-  } /* else if(tagName == 'img' && tagClass == 'sprites'){
-    if(elementValue < 10){
-      newTag.src = './assets/sprites/00'+elementValue+'MS.png';
-    } else if(elementValue >= 10 && elementValue <= 99) {
-      newTag.src = './assets/sprites/0'+elementValue+'MS.png';
-    } else {
-      newTag.src = './assets/sprites/'+elementValue+'MS.png';
-    }
-  }*/ else if(tagName == 'p' && elementValue) {
+  } else if(tagName == 'p' && elementValue) {
     newTag.innerText = elementValue;
   } else if(tagName == 'span'){
     newTag.innerText = elementValue;
